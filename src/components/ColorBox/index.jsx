@@ -1,11 +1,12 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { useState } from "react";
-
-ColorBox.propTypes = {};
+import "./ColorBox.scss";
 
 function ColorBox() {
-  const [color, setColor] = useState("deeppink");
+  const [color, setColor] = useState(() => {
+    const initColor = localStorage.getItem("box_color") || "deeppink"; //get initColor first time, not work every reload
+    return initColor;
+  });
 
   const getRandomColor = () => {
     const LIST_COLOR = ["deeppink", "black", "white", "yellow", "red", "blue"];
@@ -17,6 +18,8 @@ function ColorBox() {
     //get color from random color -> set color = color recieved
     const newColor = getRandomColor();
     setColor(newColor);
+
+    localStorage.setItem("box_color", newColor);
   };
 
   return (
